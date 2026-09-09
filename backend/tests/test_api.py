@@ -1,5 +1,7 @@
 from io import BytesIO
 
+from backend.app.services.gemini_service import normalize_todos
+
 
 def note_payload() -> dict[str, str]:
     return {
@@ -8,6 +10,14 @@ def note_payload() -> dict[str, str]:
         "attendees": "홍길동, 김철수",
         "body": "회의 원문",
     }
+
+
+def test_normalize_todos_from_gemini_array() -> None:
+    value = "['목록 화면 및 검색 기능 개발 완료|김대리|다음 주 금요일', '받아쓰기 오류 처리 마무리|이주임|이번 주 내']"
+    assert normalize_todos(value) == (
+        "목록 화면 및 검색 기능 개발 완료|김대리|다음 주 금요일\\n"
+        "받아쓰기 오류 처리 마무리|이주임|이번 주 내"
+    )
 
 
 def test_create_list_detail_update_delete(client):

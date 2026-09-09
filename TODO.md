@@ -1,6 +1,8 @@
 # TODO
 
 ## 진행 중
+- [x] Gemini가 반환한 Python 리스트 형태의 할 일을 정상적인 항목으로 파싱하고 화면 표시를 검증한다 (리스트를 줄바꿈 항목으로 정규화, 전체 테스트 19 passed)
+- [x] 사용자가 직접 테스트할 수 있도록 FastAPI 서버를 다시 실행한다 (http://127.0.0.1:8011 응답 확인)
 - [x] 화면 캡처의 받아쓰기 500 오류와 업로드 endpoint 동작을 확인하고 수정한다 (Gemini SDK Part.from_bytes 적용, 실제 WAV 업로드 200, Playwright 받아쓰기 완료, pytest 18 passed)
 
 ## 완료

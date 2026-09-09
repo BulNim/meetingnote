@@ -1,5 +1,5 @@
+import ast
 import json
-import os
 from dataclasses import dataclass
 from typing import Any
 
@@ -29,6 +29,38 @@ class AnalysisResult:
     summary: str
     decisions: str
     todos: str
+
+
+def normalize_todos(value: Any) -> str:
+    """Gemini의 배열 또는 문자열 응답을 저장 규격으로 변환한다."""
+    if value is None:
+        return ""
+    if isinstance(value, (list, tuple)):
+        items = value
+    elif isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return ""
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError:
+            try:
+                parsed = ast.literal_eval(text)
+            except (ValueError, SyntaxError):
+                return text
+        if not isinstance(parsed, (list, tuple)):
+            return text
+        items = parsed
+    else:
+        return str(value)
+
+    normalized: list[str] = []
+    for item in items:
+        if isinstance(item, (list, tuple)):
+            normalized.append("| ".join(str(part).strip() for part in item))
+        else:
+            normalized.append(str(item).strip())
+    return "\\n".join(item for item in normalized if item)
 
 
 class GeminiService:
@@ -73,7 +105,7 @@ class GeminiService:
         return AnalysisResult(
             summary=str(result.get("summary", "")),
             decisions=str(result.get("decisions", "")),
-            todos=str(result.get("todos", "")),
+            todos=normalize_todos(result.get("todos", "")),
         )
 
     def transcribe(self, data: bytes, filename: str) -> str:

@@ -1,5 +1,6 @@
 from io import BytesIO
 
+from backend.app.schemas import NoteListItem
 from backend.app.services.gemini_service import normalize_todos
 
 
@@ -18,6 +19,21 @@ def test_normalize_todos_from_gemini_array() -> None:
         "목록 화면 및 검색 기능 개발 완료|김대리|다음 주 금요일\\n"
         "받아쓰기 오류 처리 마무리|이주임|이번 주 내"
     )
+
+
+def test_note_serializer_normalizes_legacy_todos() -> None:
+    note = NoteListItem(
+        id=1,
+        title="회의",
+        met_at="2026-09-09T01:00:00Z",
+        attendees="",
+        summary="",
+        decisions="",
+        todos="['첫 번째 할 일|담당자|기한', '두 번째 할 일|담당자2|기한2']",
+    )
+    serialized = note.model_dump()
+    assert "\\n" in serialized["todos"]
+    assert "['" not in serialized["todos"]
 
 
 def test_create_list_detail_update_delete(client):

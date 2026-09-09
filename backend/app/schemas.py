@@ -11,6 +11,8 @@ def format_utc_datetime(value: datetime) -> str:
 
 from pydantic import BaseModel, ConfigDict, Field, field_serializer, field_validator
 
+from .services.gemini_service import normalize_todos
+
 
 class NoteInput(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -38,6 +40,10 @@ class NoteListItem(BaseModel):
     @field_serializer("met_at")
     def serialize_met_at(self, value: datetime) -> str:
         return format_utc_datetime(value)
+
+    @field_serializer("todos")
+    def serialize_todos(self, value: str | None) -> str | None:
+        return normalize_todos(value)
 
 
 class NoteDetail(NoteListItem):

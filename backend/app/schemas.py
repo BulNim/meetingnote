@@ -1,4 +1,13 @@
-from datetime import datetime
+from datetime import datetime, timezone
+
+
+def format_utc_datetime(value: datetime) -> str:
+    """UTC 시각을 API 응답용 ISO 8601 문자열로 변환한다."""
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=timezone.utc)
+    return value.astimezone(timezone.utc).isoformat(timespec="seconds").replace(
+        "+00:00", "Z"
+    )
 
 from pydantic import BaseModel, ConfigDict, Field, field_serializer, field_validator
 
@@ -28,7 +37,7 @@ class NoteListItem(BaseModel):
 
     @field_serializer("met_at")
     def serialize_met_at(self, value: datetime) -> str:
-        return value.replace(tzinfo=None).isoformat() + "Z"
+        return format_utc_datetime(value)
 
 
 class NoteDetail(NoteListItem):

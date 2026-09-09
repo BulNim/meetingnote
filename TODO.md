@@ -3,6 +3,11 @@
 ## 진행 중
 
 ## 완료
+- [x] 고정 의존성 정책을 지키며 표준 datetime으로 met_at UTC 포맷팅을 개선한다 (02-specs 기준 UTC ISO 8601 `YYYY-MM-DDTHH:MM:SSZ`, 전체 테스트 18 passed)
+- [x] 05-conventions.md 테스트 매트릭스 12개 케이스를 실행하고 결과를 기록한다 (12 passed, 전체 회귀 16 passed)
+- [x] docs/04-tasks.md의 Phase 2 진행 상태를 확인해 보고한다
+- [x] 제공받은 Gemini API 키를 프로젝트 루트 .env에 저장하고 로컬 설정을 검증한다
+
 - [x] Playwright로 Swagger 7개 엔드포인트를 테스트하고 결과를 확인한다 (POST /api/upload은 GEMINI_API_KEY 미설정으로 502 확인)
 - [?] localhost:8000/docs 접속 실패 원인을 확인하고 Swagger 접속을 복구한다 (8000 포트를 다른 Node.js server.js가 점유해 localhost 요청이 Node 서버로 전달됨. 해당 프로세스 종료 또는 URL 사용 방식 확인 필요)
 - [x] Phase 2 백엔드 전체 구현 (7번째 API로 GET /api/notes/{id} 추가)

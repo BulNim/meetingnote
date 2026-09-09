@@ -3,6 +3,7 @@
 ## 진행 중
 
 ## 완료
+- [x] Phase 3 프론트 전체 구현 (화면 4종·API 연결·360px 반응형·테마·검증·push)
 - [x] 고정 의존성 정책을 지키며 표준 datetime으로 met_at UTC 포맷팅을 개선한다 (02-specs 기준 UTC ISO 8601 `YYYY-MM-DDTHH:MM:SSZ`, 전체 테스트 18 passed)
 - [x] 05-conventions.md 테스트 매트릭스 12개 케이스를 실행하고 결과를 기록한다 (12 passed, 전체 회귀 16 passed)
 - [x] docs/04-tasks.md의 Phase 2 진행 상태를 확인해 보고한다

@@ -1,6 +1,13 @@
+from pathlib import Path
+
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+
+
+FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
+
 
 from .database import Base, engine
 from .routers import notes, todos, upload
@@ -27,6 +34,9 @@ async def validation_exception_handler(
 app.include_router(notes.router)
 app.include_router(todos.router)
 app.include_router(upload.router)
+
+if FRONTEND_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
 
 
 if __name__ == "__main__":

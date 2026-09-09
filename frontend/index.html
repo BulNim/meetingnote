@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MeetingNote</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">
+  <main class="mx-auto min-h-screen max-w-6xl px-4 py-6 sm:px-6">
+    <header class="mb-6 flex items-center justify-between rounded-3xl border border-white/70 bg-white/70 px-5 py-4 shadow-xl shadow-slate-200/50 backdrop-blur dark:border-white/10 dark:bg-slate-900/70 dark:shadow-black/20">
+      <div>
+        <h1 class="text-xl font-semibold tracking-tight">MeetingNote</h1>
+        <p class="text-sm text-slate-500 dark:text-slate-400">회의록 자동 정리</p>
+      </div>
+      <nav class="flex items-center gap-1 text-sm" aria-label="주 메뉴">
+        <button data-view="list" class="navButton rounded-xl bg-slate-800 px-3 py-2 font-medium text-white">목록</button>
+        <button data-view="create" class="navButton rounded-xl px-3 py-2 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">넣기</button>
+        <button data-view="todos" class="navButton rounded-xl px-3 py-2 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">할 일</button>
+        <button id="themeButton" class="rounded-xl px-3 py-2 text-lg" aria-label="테마 전환">◐</button>
+      </nav>
+    </header>
+
+    <div id="status" class="mb-4 hidden rounded-2xl px-4 py-3 text-sm" role="status"></div>
+    <section id="app" aria-live="polite"></section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

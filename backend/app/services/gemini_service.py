@@ -60,7 +60,7 @@ def normalize_todos(value: Any) -> str:
             normalized.append("| ".join(str(part).strip() for part in item))
         else:
             normalized.append(str(item).strip())
-    return "\\n".join(item for item in normalized if item)
+    return "\n".join(item for item in normalized if item)
 
 
 class GeminiService:

@@ -1,0 +1,7 @@
+__pycache__/
+.pytest_cache/
+.venv/
+*.db
+*.log
+.env
+실습소재/

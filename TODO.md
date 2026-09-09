@@ -1,6 +1,11 @@
 # TODO
 
 ## 진행 중
+- [x] 배포를 위해 운영 환경을 Neon PostgreSQL로 마이그레이션하고 Vercel 배포 설정을 추가한다 (psycopg[binary], Vercel ASGI entrypoint, DATABASE_URL 환경변수, 배포 smoke test 완료)
+- [x] Vercel CLI로 Neon 리소스를 생성하고 MeetingNote 프로젝트를 연결·배포한다 (meetingnote-db 연결, production 배포 및 핵심 경로 200 확인)
+- [x] Vercel의 모든 프로젝트와 Neon DB 목록을 확인하고 삭제 전 최종 승인을 받는다 (프로젝트 meetingnote 및 Neon 리소스 meetingnote-db 삭제, 재조회 결과 0개)
+- [x] Vercel CLI 인증 상태를 확인한다 (vercel whoami 정상 응답: kimkap10-9485)
+- [x] Vercel CLI를 설치하고 브라우저 로그인 인증을 완료한다 (Vercel CLI 59.13.1, 계정 kimkap10-9485 인증 확인)
 - [x] 할 일 화면의 배열 표시를 제거하고 담당자·기한·회의를 표 형태로 정렬해 표현한다 (상세 화면 표 변환, 기존 데이터 정규화, 전체 테스트 20 passed)
 - [x] Gemini가 반환한 Python 리스트 형태의 할 일을 정상적인 항목으로 파싱하고 화면 표시를 검증한다 (리스트를 줄바꿈 항목으로 정규화, 전체 테스트 19 passed)
 - [x] 사용자가 직접 테스트할 수 있도록 FastAPI 서버를 다시 실행한다 (http://127.0.0.1:8011 응답 확인)

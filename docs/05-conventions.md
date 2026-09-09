@@ -47,6 +47,13 @@ __pycache__/
 | 업로드 mp4 파일 | `POST /api/upload`에 mp4 전송 | `415` |
 | 업로드 30MB 파일 | `POST /api/upload`에 30MB 파일 전송 | `413` |
 
+## 운영 배포 규칙
+
+- Vercel 운영 DB는 Neon PostgreSQL을 사용하고 `DATABASE_URL`은 Vercel Environment Variables에만 등록한다.
+- `GEMINI_API_KEY`와 `DATABASE_URL`을 코드·Git·문서에 실제 값으로 기록하지 않는다.
+- 로컬·테스트는 SQLite를 사용하며 Vercel 환경에서는 `DATABASE_URL` 누락을 허용하지 않는다.
+- 배포 후 `/`, `/docs`, `/openapi.json`, 핵심 `/api/` 경로를 smoke test한다.
+
 ## Git 커밋 규칙
 
 커밋 유형은 `feat`, `fix`, `docs`, `refactor`, `test`, `chore` 중 하나를 사용하고, 뒤에 한국어 요약을 작성한다.

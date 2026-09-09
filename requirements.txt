@@ -1,7 +1,6 @@
 fastapi
 uvicorn
 sqlalchemy
-pytest
 httpx
 google-genai
 python-multipart

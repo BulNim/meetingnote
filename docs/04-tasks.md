@@ -19,7 +19,7 @@
 
 서버 포트는 `8000`으로 고정한다.
 
-Phase 2 의존성은 `fastapi`, `uvicorn`, `sqlalchemy`, `pytest`, `httpx`, `google-genai`, `python-multipart`, `python-dotenv`로 한정한다. 목록 밖 의존성은 추가하지 않는다. `pytest` 실행 시 `httpx 2` 설치 권고가 표시되어도 무시한다.
+Phase 2 의존성은 `fastapi`, `uvicorn`, `sqlalchemy`, `pytest`, `httpx`, `google-genai`, `python-multipart`, `python-dotenv`, `psycopg[binary]`로 한정한다. 목록 밖 의존성은 추가하지 않는다. `pytest` 실행 시 `httpx 2` 설치 권고가 표시되어도 무시한다.
 
 | 단계 | 체크리스트 | 검증 기준 |
 |---:|---|---|

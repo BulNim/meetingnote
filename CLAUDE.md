@@ -27,7 +27,7 @@
 
 ## 기술 스택 (고정 — 임의 변경 금지)
 
-- 백엔드 `backend/`: FastAPI + Python 3.11 이상 + SQLite
+- 백엔드 `backend/`: FastAPI + Python 3.11 이상 + SQLite(로컬·테스트), Neon PostgreSQL(Vercel 운영)
 - 프론트 `frontend/`: Vanilla JS + Tailwind CDN
 - 프론트 파일은 `index.html`과 `app.js` 2개만 사용한다.
 - 음성 받아쓰기는 Gemini API `gemini-3.1-flash-lite`를 사용한다.

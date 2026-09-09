@@ -6,6 +6,10 @@ from typing import Any
 from ..config import GEMINI_API_KEY, GEMINI_MODEL
 
 
+class GeminiServiceError(RuntimeError):
+    """Gemini API 호출 또는 응답 처리 실패를 나타낸다."""
+
+
 PROMPT = """다음 회의 본문을 아래 기준으로 세 갈래로 분류하라.
 요약- 회의 전체를 3~5줄로. 새로운 사실을 지어내지 말것
 결정사항- 「하기로 했다/ 확정/ 승인」처럼 합의가 끝난 것만
@@ -35,15 +39,29 @@ class GeminiService:
         if self.client is not None:
             return self.client
         if not GEMINI_API_KEY:
-            raise RuntimeError("GEMINI_API_KEY가 설정되지 않았습니다.")
-        from google import genai
+            raise GeminiServiceError("GEMINI_API_KEY가 설정되지 않았습니다.")
+        try:
+            from google import genai
 
-        self.client = genai.Client(api_key=GEMINI_API_KEY)
+            self.client = genai.Client(api_key=GEMINI_API_KEY)
+        except Exception as exc:
+            raise GeminiServiceError("Gemini 클라이언트를 초기화할 수 없습니다.") from exc
         return self.client
 
+    def _generate_content(self, *, contents: Any, config: Any) -> Any:
+        try:
+            return self._client().models.generate_content(
+                model=GEMINI_MODEL,
+                contents=contents,
+                config=config,
+            )
+        except GeminiServiceError:
+            raise
+        except Exception as exc:
+            raise GeminiServiceError("Gemini API 호출에 실패했습니다.") from exc
+
     def analyze_text(self, body: str) -> AnalysisResult:
-        response = self._client().models.generate_content(
-            model=GEMINI_MODEL,
+        response = self._generate_content(
             contents=PROMPT + body,
             config={"response_mime_type": "application/json"},
         )
@@ -51,7 +69,7 @@ class GeminiService:
         try:
             result = json.loads(raw_text)
         except json.JSONDecodeError as exc:
-            raise RuntimeError("Gemini 응답 형식이 올바르지 않습니다.") from exc
+            raise GeminiServiceError("Gemini 응답 형식이 올바르지 않습니다.") from exc
         return AnalysisResult(
             summary=str(result.get("summary", "")),
             decisions=str(result.get("decisions", "")),
@@ -59,10 +77,19 @@ class GeminiService:
         )
 
     def transcribe(self, data: bytes, filename: str) -> str:
-        response = self._client().models.generate_content(
-            model=GEMINI_MODEL,
-            contents=[{"mime_type": _mime_type(filename), "data": data}],
-            config={"response_mime_type": "text/plain"},
+        try:
+            from google.genai import types
+
+            audio_part = types.Part.from_bytes(
+                data=data,
+                mime_type=_mime_type(filename),
+            )
+        except Exception as exc:
+            raise GeminiServiceError("오디오 데이터를 처리할 수 없습니다.") from exc
+
+        response = self._generate_content(
+            contents=[audio_part],
+            config=types.GenerateContentConfig(responseMimeType="text/plain"),
         )
         return (getattr(response, "text", "") or "").strip()
 

@@ -1,6 +1,7 @@
 # TODO
 
 ## 진행 중
+- [x] 화면 캡처의 받아쓰기 500 오류와 업로드 endpoint 동작을 확인하고 수정한다 (Gemini SDK Part.from_bytes 적용, 실제 WAV 업로드 200, Playwright 받아쓰기 완료, pytest 18 passed)
 
 ## 완료
 - [x] Phase 3 프론트 전체 구현 (화면 4종·API 연결·360px 반응형·테마·검증·push)

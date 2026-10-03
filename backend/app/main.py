@@ -7,6 +7,7 @@ from pathlib import Path
 from fastapi import Depends, FastAPI, File, HTTPException, Query, Request, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
@@ -182,3 +183,9 @@ async def upload(file: UploadFile = File(...)):
         logger.error("업로드 받아쓰기 실패: %s", exc)
         raise HTTPException(status_code=502, detail="받아쓰기에 실패했습니다") from exc
     return UploadOut(body=text)
+
+
+# --- 화면 제공 (03-design #2 - 같은 오리진. file:// 로 열지 않음) --------
+FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent / "frontend"
+if FRONTEND_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MeetingNote</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { darkMode: 'class' };
+  // 초기값은 시스템 설정, 한 번 고르면 localStorage 가 이김 (03-design #8)
+  (function () {
+    var saved = localStorage.getItem('theme');
+    var dark = saved ? saved === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (dark) document.documentElement.classList.add('dark');
+  })();
+</script>
+<style>
+  html { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", sans-serif; }
+  body { overflow-x: hidden; }
+</style>
+</head>
+<body class="bg-zinc-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen">
+
+<!-- 상단 고정 헤더: 제목 + 탭 3개 + 테마 버튼 (03-design 공통) -->
+<header class="sticky top-0 z-30 backdrop-blur bg-white/70 dark:bg-zinc-900/70 border-b border-zinc-200 dark:border-zinc-800">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
+    <h1 class="text-lg font-bold">MeetingNote</h1>
+    <span class="hidden sm:inline text-xs text-zinc-500">회의록 자동 정리</span>
+    <nav class="ml-auto flex items-center gap-1">
+      <button data-tab="list"  class="tab px-3 py-1.5 rounded-xl text-sm min-h-11">목록</button>
+      <button data-tab="new"   class="tab px-3 py-1.5 rounded-xl text-sm min-h-11">넣기</button>
+      <button data-tab="todos" class="tab px-3 py-1.5 rounded-xl text-sm min-h-11">할 일</button>
+      <button id="btnTheme" class="px-3 py-1.5 rounded-xl text-sm min-h-11" title="테마">◐</button>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-5">
+
+  <!-- 화면 1 - 목록 -->
+  <section id="viewList">
+    <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-2 mb-4">
+      <input id="q" type="search" placeholder="제목 또는 참석자로 검색"
+             class="rounded-xl px-3 py-2 bg-white/70 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 shadow-sm min-h-11" />
+      <input id="from" type="date" aria-label="from"
+             class="rounded-xl px-3 py-2 bg-white/70 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 shadow-sm min-h-11" />
+      <input id="to" type="date" aria-label="to"
+             class="rounded-xl px-3 py-2 bg-white/70 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 shadow-sm min-h-11" />
+    </div>
+    <div id="cards" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+  </section>
+
+  <!-- 화면 2 - 넣기 -->
+  <section id="viewNew" class="hidden">
+    <div class="grid gap-3">
+      <input id="title" placeholder="제목"
+             class="rounded-xl px-3 py-2 bg-white/70 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 shadow-sm min-h-11" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <input id="metAt" type="datetime-local" aria-label="일시"
+               class="rounded-xl px-3 py-2 bg-white/70 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 shadow-sm min-h-11" />
+        <input id="attendees" placeholder="참석자 (쉼표로 구분)"
+               class="rounded-xl px-3 py-2 bg-white/70 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 shadow-sm min-h-11" />
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-3 items-center">
+        <input id="file" type="file" accept=".mp3,.wav" aria-label="파일 선택"
+               class="rounded-xl px-3 py-2 bg-white/70 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 shadow-sm min-h-11 text-sm" />
+        <button id="btnUp" class="rounded-xl px-4 py-2 bg-sky-600 text-white font-semibold shadow-lg min-h-11">받아쓰기</button>
+        <span id="upState" class="text-sm text-zinc-500"></span>
+      </div>
+      <textarea id="body" rows="6" placeholder="본문 - 받아쓴 원문 또는 붙여넣은 메모"
+                class="rounded-xl px-3 py-2 bg-white/70 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 shadow-sm"></textarea>
+      <div class="flex items-center gap-3">
+        <button id="btnSave" class="rounded-xl px-4 py-2 bg-zinc-800 dark:bg-zinc-200 text-white dark:text-zinc-900 font-semibold shadow-lg min-h-11">정리하기</button>
+        <span id="saveState" class="text-sm text-zinc-500"></span>
+      </div>
+      <div id="result" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+    </div>
+  </section>
+
+  <!-- 화면 4 - 할 일 -->
+  <section id="viewTodos" class="hidden">
+    <div class="overflow-x-auto rounded-xl shadow-lg">
+      <table class="w-full text-sm bg-white/70 dark:bg-zinc-900/70">
+        <thead class="bg-zinc-800 text-white">
+          <tr><th class="text-left px-3 py-2">내용</th><th class="text-left px-3 py-2">담당자</th><th class="text-left px-3 py-2">기한</th><th class="text-left px-3 py-2">회의</th></tr>
+        </thead>
+        <tbody id="todoBody"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<!-- 화면 3 - 상세 (겹침 창) -->
+<div id="modal" class="hidden fixed inset-0 z-40 bg-black/50 p-4 overflow-y-auto"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

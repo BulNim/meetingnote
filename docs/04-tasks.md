@@ -63,13 +63,13 @@ pytest 실행 시 httpx2 설치 권고가 떠도 무시한다.
 
 | 단계 | 검증 방법 | 완료 |
 |---|---|---|
-| 3.1 `frontend/` + `index.html` + `app.js` 2개 파일 | 파일이 2개뿐 | [ ] |
-| 3.2 Tailwind CDN + 테마 토글 | 다크/라이트 전환, localStorage 유지 | [ ] |
-| 3.3 목록 화면 - 카드 + 검색 | `#cards` `#q` `#from` `#to` 동작 | [ ] |
-| 3.4 넣기 화면 - 폼 + 업로드 | `#title` `#metAt` `#attendees` `#file` `#body` `#btnUp` `#btnSave` | [ ] |
-| 3.5 결과 세 칸 + 상세 창 | `#result` `#modal` `#mTitle` | [ ] |
-| 3.6 할 일 화면 | `#todoBody` 표, 담당자 · 기한 | [ ] |
-| 3.7 **요소 이름이 03-design 표와 같은지 확인** | id 14개를 표와 1:1 대조 | [ ] |
-| 3.8 API 연결 검증 + git push | 엔드포인트 7개 화면 동작, `git push origin main` | [ ] |
+| 3.1 `frontend/` + `index.html` + `app.js` 2개 파일 | 파일이 2개뿐 | [x] |
+| 3.2 Tailwind CDN + 테마 토글 | 다크/라이트 전환, localStorage 유지 | [x] |
+| 3.3 목록 화면 - 카드 + 검색 | `#cards` `#q` `#from` `#to` 동작 | [x] |
+| 3.4 넣기 화면 - 폼 + 업로드 | `#title` `#metAt` `#attendees` `#file` `#body` `#btnUp` `#btnSave` | [x] |
+| 3.5 결과 세 칸 + 상세 창 | `#result` `#modal` `#mTitle` | [x] |
+| 3.6 할 일 화면 | `#todoBody` 표, 담당자 · 기한 | [x] |
+| 3.7 **요소 이름이 03-design 표와 같은지 확인** | id 14개를 표와 1:1 대조 | [x] |
+| 3.8 API 연결 검증 + git push | 엔드포인트 7개 화면 동작, `git push origin main` | [x] |
 
 Phase 3.8 통과 시 MVP 완성. 확장 작업은 새 작업 문서로 쓰고 여기에 덧붙이지 않는다.

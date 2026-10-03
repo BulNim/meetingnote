@@ -123,6 +123,13 @@ $('btnSave').addEventListener('click', async () => {
       }),
     });
     renderResult(saved);
+    // 저장 성공 뒤 입력칸을 비운다 (02-specs 넣기 화면 - 저장 뒤 처리)
+    $('title').value = '';
+    $('metAt').value = '';
+    $('attendees').value = '';
+    $('file').value = '';
+    $('body').value = '';
+    $('upState').textContent = '';
     $('saveState').textContent = '저장 완료';
   } catch (e) {
     $('saveState').textContent = '저장 실패 (' + (e.status || '오류') + ')';

@@ -1,0 +1,45 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ". \"D:/meetingnote/.claude/hooks/session-start.sh\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ". \"D:/meetingnote/.claude/hooks/prompt-mark.sh\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ". \"D:/meetingnote/.claude/hooks/pre-tool.sh\""
+          }
+        ],
+        "matcher": "Write|Edit|NotebookEdit|Bash|PowerShell"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ". \"D:/meetingnote/.claude/hooks/check-todo.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -23,7 +23,7 @@ CLAUDE.md + docs/ 6종 작성
 | 1.7 02-specs.md (WHAT) | 필드 8개 · API 7개 · 구분 기준 3종 | [x] |
 | 1.8 03-design.md (HOW) | 결정 8행 표 · 의존성 정책 | [x] |
 | 1.9 04-tasks.md | Phase 3개 체크리스트 | [x] |
-| 1.10 05-conventions.md + 첫 커밋 | 금지 6개 · 매트릭스 13케이스 · `git log` 1건 | [ ] |
+| 1.10 05-conventions.md + 첫 커밋 | 금지 6개 · 매트릭스 13케이스 · `git log` 1건 | [x] |
 
 ---
 
@@ -42,16 +42,16 @@ pytest 실행 시 httpx2 설치 권고가 떠도 무시한다.
 
 | 단계 | 검증 방법 | 완료 |
 |---|---|---|
-| 2.1 `backend/` 폴더와 가상 환경 | `backend/.venv` 생성, requirements.txt 8개 | [ ] |
-| 2.2 Meeting 모델 + SQLite | 필드 8개가 02-specs 와 일치 | [ ] |
-| 2.3 `POST /api/notes` | 201, 세 갈래 구분까지 | [ ] |
-| 2.4 `GET /api/notes` | 200, body 없음 | [ ] |
-| 2.5 `GET /api/notes/{id}` | 200, body 있음 | [ ] |
-| 2.6 `PUT` / `DELETE` | 200 / 204 | [ ] |
-| 2.7 `GET /api/todos` | 200, `what`/`who`/`when`/`note_id`/`note_title` | [ ] |
-| 2.8 `POST /api/upload` | 200, 실제 wav 로 본문 반환 | [ ] |
-| 2.9 검색 `q` / `from` / `to` | 제목 · 참석자 부분 일치, 날짜 양끝 포함 | [ ] |
-| 2.10 pytest 매트릭스 13건 + Swagger | `13 passed`, `/docs` 에 엔드포인트 7개 | [ ] |
+| 2.1 `backend/` 폴더와 가상 환경 | `backend/.venv` 생성, requirements.txt 8개 | [x] |
+| 2.2 Meeting 모델 + SQLite | 필드 8개가 02-specs 와 일치 | [x] |
+| 2.3 `POST /api/notes` | 201, 세 갈래 구분까지 | [x] |
+| 2.4 `GET /api/notes` | 200, body 없음 | [x] |
+| 2.5 `GET /api/notes/{id}` | 200, body 있음 | [x] |
+| 2.6 `PUT` / `DELETE` | 200 / 204 | [x] |
+| 2.7 `GET /api/todos` | 200, `what`/`who`/`when`/`note_id`/`note_title` | [x] |
+| 2.8 `POST /api/upload` | 200, 실제 wav 로 본문 반환 | [x] |
+| 2.9 검색 `q` / `from` / `to` | 제목 · 참석자 부분 일치, 날짜 양끝 포함 | [x] |
+| 2.10 pytest 매트릭스 13건 + Swagger | `13 passed`, `/docs` 에 엔드포인트 7개 | [x] |
 
 ---
 

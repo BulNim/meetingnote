@@ -8,6 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent
 # .env 는 프로젝트 루트에 둔다
 load_dotenv(BASE_DIR.parent / ".env")
 
+FRONTEND_DIR = BASE_DIR.parent / "frontend"
 DATABASE_URL = f"sqlite:///{BASE_DIR / 'meetingnote.db'}"
 MAX_UPLOAD_BYTES = 25 * 1024 * 1024
 DEFAULT_GEMINI_MODEL = "gemini-3.1-flash-lite"

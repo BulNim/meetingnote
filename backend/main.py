@@ -6,11 +6,12 @@ from pathlib import Path
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
 import gemini_service
-from config import MAX_UPLOAD_BYTES
+from config import FRONTEND_DIR, MAX_UPLOAD_BYTES
 from database import Base, engine, get_db
 from models import Meeting
 from schemas import (
@@ -156,3 +157,7 @@ def upload_audio(file: UploadFile):
         logger.exception("받아쓰기 실패")
         raise HTTPException(status_code=502, detail="받아쓰기에 실패했습니다.")
     return UploadResult(text=text)
+
+
+# 프론트는 같은 오리진에서 제공한다. API 라우트보다 뒤에 둬야 /api/ 가 가려지지 않는다.
+app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")

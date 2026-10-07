@@ -21,3 +21,9 @@
 |---|---|
 | `httpx` | 테스트 구동(FastAPI `TestClient`) |
 | `google-genai` | Gemini API 받아쓰기 |
+| `fastapi` | 백엔드 프레임워크 (1행 선택) |
+| `uvicorn` | FastAPI 를 8000 포트로 실행하는 서버 |
+| `sqlalchemy` | SQLite ORM, 추후 PostgreSQL 전환 대비 (3행 선택) |
+| `pytest` | 테스트 실행 (CLAUDE.md 기술 스택) |
+| `python-multipart` | `POST /api/upload` 의 파일 업로드(multipart) 수신에 FastAPI 가 요구함 |
+| `python-dotenv` | `.env` 에서 `GEMINI_API_KEY`, `GEMINI_MODEL` 읽기 (키 하드코딩 금지) |

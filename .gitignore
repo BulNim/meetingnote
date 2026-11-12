@@ -1,0 +1,7 @@
+# 비밀 키
+.env
+.env.*
+!.env.example
+
+# 투두가드 실행 상태 (세션마다 바뀜)
+.claude/todo-guard/
